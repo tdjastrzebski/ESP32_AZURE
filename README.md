@@ -18,3 +18,5 @@ https://github.com/tdjastrzebski/ESP32_AZURE
 * [nanoFramework Azure IoT SDK](https://github.com/nanoframework/nanoFramework.Azure.Devices)
 * [Azure IoT documentation for MQTT](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support)
 * [nanoFramework.IoT.Device Bmxx80 devices](https://github.com/nanoframework/nanoFramework.IoT.Device/tree/develop/devices/Bmxx80)
+
+![](image.jpg)
