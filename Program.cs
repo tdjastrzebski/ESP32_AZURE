@@ -14,8 +14,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
 const string IotHubAddress = "";
-const string SasKey = "";
 const string DeviceID = "";
+const string SasKey = "";
 
 const string Ssid = "";
 const string Password = "";
@@ -54,7 +54,7 @@ while (true) {
         //readResult = new Bmp280ReadResult(new UnitsNet.Temperature(21.0, UnitsNet.Units.TemperatureUnit.DegreeCelsius), new UnitsNet.Pressure(1020.0, UnitsNet.Units.PressureUnit.Hectopascal));
 
         if (readResult != null) {
-            Debug.WriteLine($"Measurement result obtained. T:{readResult.Temperature.DegreesCelsius:f2}�C, P:{readResult.Pressure.Hectopascals:f2}hPa");
+            Debug.WriteLine($"Measurement result obtained. T:{readResult.Temperature.DegreesCelsius:f2}°C, P:{readResult.Pressure.Hectopascals:f2}hPa");
         } else {
             Debug.WriteLine("Measurement result unavailable.");
             continue;
