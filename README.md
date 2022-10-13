@@ -19,7 +19,7 @@ https://github.com/tdjastrzebski/ESP32_AZURE
 ## References
 * [nanoframework website](https://www.nanoframework.net)
 * [nanoframework GitHub](https://github.com/nanoframework)
-* [getting started](https://docs.nanoframework.net/content/getting-started-guides/getting-started-managed.html)
+* [nanoframework - getting started](https://docs.nanoframework.net/content/getting-started-guides/getting-started-managed.html)
 * [nanoFramework Network helpers](https://github.com/nanoframework/System.Device.Wifi)
 * [nanoFramework Azure IoT SDK](https://github.com/nanoframework/nanoFramework.Azure.Devices)
 * [Azure IoT documentation for MQTT](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support)
