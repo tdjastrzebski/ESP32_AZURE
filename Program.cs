@@ -13,13 +13,6 @@ using System.Reflection;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
-const string IotHubAddress = "";
-const string DeviceID = "";
-const string SasKey = "";
-
-const string Ssid = "";
-const string Password = "";
-
 const string IntervalSeconds = "intervalSeconds";
 
 var gpio = new GpioController();
@@ -33,7 +26,7 @@ var bmp280Sensor = new Bmp280(i2cDevice)
     PressureSampling = Sampling.UltraHighResolution
 };
 
-DeviceClient azureIoT = new(IotHubAddress, DeviceID, SasKey, azureCert: new X509Certificate(Resources.GetBytes(Resources.BinaryResources.AzureRoot)));
+DeviceClient azureIoT = new(Config.IotHubAddress, Config.DeviceID, Config.SasKey, azureCert: new X509Certificate(Resources.GetBytes(Resources.BinaryResources.AzureRoot)));
 
 Bmp280ReadResult readResult;
 bool isTwinUpdated = false;
@@ -54,14 +47,14 @@ while (true) {
         //readResult = new Bmp280ReadResult(new UnitsNet.Temperature(21.0, UnitsNet.Units.TemperatureUnit.DegreeCelsius), new UnitsNet.Pressure(1020.0, UnitsNet.Units.PressureUnit.Hectopascal));
 
         if (readResult != null) {
-            Debug.WriteLine($"Measurement result obtained. T:{readResult.Temperature.DegreesCelsius:f2}°C, P:{readResult.Pressure.Hectopascals:f2}hPa");
+            Debug.WriteLine($"Measurement result obtained. T={readResult.Temperature.DegreesCelsius:f2}°C, P={readResult.Pressure.Hectopascals:f2}hPa");
         } else {
             Debug.WriteLine("Measurement result unavailable.");
             continue;
         }
 
         if (WifiNetworkHelper.Status != NetworkHelperStatus.NetworkIsReady) {
-            if (WifiNetworkHelper.ConnectDhcp(Ssid, Password, WifiReconnectionKind.Automatic, requiresDateTime: true, token: new CancellationTokenSource(10_000).Token)) {
+            if (WifiNetworkHelper.ConnectDhcp(Config.Ssid, Config.Password, WifiReconnectionKind.Automatic, requiresDateTime: true, token: new CancellationTokenSource(10_000).Token)) {
                 Debug.WriteLine("WiFi connection succeeded.");
             } else {
                 Debug.WriteLine("WiFi connection failed.");
