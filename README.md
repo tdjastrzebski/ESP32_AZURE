@@ -5,6 +5,7 @@ This example demonstrates how to use the Azure IoT SDK library and BMP280 pressu
 > Note:  
 > 1. This example is configured for ESP32 but can be easily reconfigured for any nanoFramework-supported board with WiFi and I2C bus.
 > 1. Before building, rename `Config_template` to `Config` and provide the required setting values.
+> 1. BMP280 sensor on the picture has non-standard pinout. Typical pinout is: black GND, red Vcc, yellow TX/SDA, white RX/SCL
 
 ## Prerequisites
 * Visual Studio 2022 with nanoFramework extension
