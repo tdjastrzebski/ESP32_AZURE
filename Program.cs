@@ -20,11 +20,17 @@ var led = gpio.OpenPin(4, PinMode.Output); // note: LED connected to GPIO pin 4
 
 var i2cSettings = new I2cConnectionSettings(1, Bmp280.DefaultI2cAddress); // note: using I2C bus 1, GPIO pins: SDA 18, SCL 19
 var i2cDevice = I2cDevice.Create(i2cSettings);
-var bmp280Sensor = new Bmp280(i2cDevice)
-{
-    TemperatureSampling = Sampling.LowPower,
-    PressureSampling = Sampling.UltraHighResolution
-};
+Bmp280 bmp280Sensor = null;
+
+try {
+    bmp280Sensor = new Bmp280(i2cDevice)
+    {
+        TemperatureSampling = Sampling.LowPower,
+        PressureSampling = Sampling.UltraHighResolution
+    };
+} catch (System.IO.IOException ex) {
+    Debug.WriteLine("BMP280 sensor unavailable.");
+}
 
 DeviceClient azureIoT = new(Config.IotHubAddress, Config.DeviceID, Config.SasKey, azureCert: new X509Certificate(Resources.GetBytes(Resources.BinaryResources.AzureRoot)));
 
@@ -41,16 +47,19 @@ while (true) {
     try {
         led.Write(PinValue.High);
 
-        // get temperature and pressure measurements
-        readResult = bmp280Sensor.Read();
-        // use to simulate the sensor measurement:
-        //readResult = new Bmp280ReadResult(new UnitsNet.Temperature(21.0, UnitsNet.Units.TemperatureUnit.DegreeCelsius), new UnitsNet.Pressure(1020.0, UnitsNet.Units.PressureUnit.Hectopascal));
-
-        if (readResult != null) {
-            Debug.WriteLine($"Measurement result obtained. T={readResult.Temperature.DegreesCelsius:f2}°C, P={readResult.Pressure.Hectopascals:f2}hPa");
+        if (bmp280Sensor != null) {
+            // get temperature and pressure measurements
+            readResult = bmp280Sensor.Read();
+            if (readResult != null) {
+                Debug.WriteLine($"Measurement result obtained. T={readResult.Temperature.DegreesCelsius:f2}°C, P={readResult.Pressure.Hectopascals:f2}hPa");
+            } else {
+                Debug.WriteLine("Measurement result unavailable.");
+                continue;
+            }
         } else {
-            Debug.WriteLine("Measurement result unavailable.");
-            continue;
+            // simulate sensor measurement
+            readResult = new Bmp280ReadResult(new UnitsNet.Temperature(20.0, UnitsNet.Units.TemperatureUnit.DegreeCelsius), new UnitsNet.Pressure(1020.0, UnitsNet.Units.PressureUnit.Hectopascal));
+            Debug.WriteLine("Measurement result simulated.");
         }
 
         if (WifiNetworkHelper.Status != NetworkHelperStatus.NetworkIsReady) {
