@@ -1,4 +1,4 @@
-﻿# Azure MQTT sample using BMP280 barometric pressure sensor and nanoFramework Azure IoT SDK Library
+﻿# ESP32-DevKitC Azure MQTT sample using BMP280 barometric pressure sensor and nanoFramework Azure IoT SDK Library
 ![](image.jpg)
 
 This example demonstrates how to use the Azure IoT SDK library and BMP280 pressure sensor.
